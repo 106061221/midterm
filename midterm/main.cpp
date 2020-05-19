@@ -30,7 +30,7 @@ uLCD_4DGL uLCD(D1, D0, D2);
 int16_t waveform[kAudioTxBufferSize];
 Serial pc(USBTX, USBRX);
 InterruptIn sw2(SW2);
-InterruptIn sw3(SW3);
+DigitalIn sw3(SW3);
 EventQueue queue1(32 * EVENTS_EVENT_SIZE);
 EventQueue queue2(32 * EVENTS_EVENT_SIZE);
 Thread t1;
@@ -69,7 +69,7 @@ int loadflag=0;
 int gesture=-1;
 int pulse=0;
 int mode=0;
-int songid=0;
+int songid=1;
 int selectflag=0;
 
 void playNote(int freq)
@@ -183,6 +183,10 @@ void song_thread()
             playNote(song0[i]);
           }
           if(length < 1) wait(0.01);
+          
+        }
+        if(sw3==0){
+          break;
         }
       }
     }
@@ -201,6 +205,10 @@ void song_thread()
             playNote(song1[i]);
           }
           if(length < 1) wait(0.01);
+          
+        }
+        if(sw3==0){
+          break;
         }
       }
     }
@@ -219,6 +227,10 @@ void song_thread()
             playNote(song2[i]);
           }
           if(length < 1) wait(0.01);
+          
+        }
+        if(sw3==0){
+            break;
         }
       }
     }
